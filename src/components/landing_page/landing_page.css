@@ -1,0 +1,132 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    /* Defining what is 1rem */
+    font-size: 62.5%;
+}
+
+body {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    /* font-size: 16px; */
+    line-height: 1.7;
+    color: #777;
+}
+
+
+.header {
+    height: 100vh;
+    background-image: url('../../assets/img/matt\(1280x853\).jpg');
+    background-size: cover;
+    background-position: top;
+    position: relative;    
+    /* clip-path: polygon(0 0, 100% 0, 100% 100%, 0 90%); */
+}
+
+
+.logo-box {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+}
+
+.cmap-logo {
+    /* height: 3.5rem;  */
+    max-height: 6.4rem;
+}
+
+
+.heading-box {
+    color: #0e0e0e;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    width: 80%;
+    transform: translate(-50%, 0);   
+    backface-visibility: hidden;
+    text-align: center;
+}
+
+
+ .heading-main {    
+    display: block;
+    font-size: 6rem;
+    font-weight: 400;
+    letter-spacing: 2rem;
+    animation: moveInLeft 0.5s ease-out;    
+} 
+
+
+.heading-sub {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 400;
+    letter-spacing: .8rem;
+    animation: moveInRight 0.5s ease-out;
+    margin-bottom: 3rem;
+}
+
+
+
+@keyframes moveInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-5rem);
+    }
+    80% {
+        transform: translateX(.5rem);
+    }
+    100% {
+        opacity: 1;
+        ransform: translateX(0);
+    }
+}
+
+
+@keyframes moveInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(5rem);
+    }
+    80% {
+        transform: translateX(-.5rem);
+    }
+    100% {
+        opacity: 1;
+        ransform: translateX(0);
+    }
+}
+
+
+
+.landing-btn {
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    /* background-color: #ffffff; 
+    color: #777777; */
+    background-color: rgb(0,112,243);
+    color: #ffffff;
+    padding: 1.5rem 7rem;
+    display: inline-block;
+    border-radius: 10rem;
+    transition: all .2s;
+}
+
+
+.landing-btn:hover {
+    transform: translateY(-.3rem);
+    background-color: rgb(36, 131, 240);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, .2);
+}
+
+.landing-btn:active {
+    transform: translateY(-.1rem);
+    background-color: rgb(0, 112, 243);
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2);
+}

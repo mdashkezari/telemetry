@@ -1,0 +1,28 @@
+.home {
+    width: 80vw;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10rem;
+    background-color: red;
+}
+
+.utility-home-heading {
+    display: block;
+    margin: 3rem;
+    margin-bottom: 5rem;
+    color: black;
+}
+
+.utility-home-heading .utility-home-heading-main {
+    text-transform: uppercase;
+    font-size: 6rem;
+    font-weight: 400;
+    letter-spacing: .3rem;
+}
+
+.utility-home-heading .utility-home-heading-sub {    
+    font-size: 2rem;
+    font-weight: 200;
+
+}

@@ -63,7 +63,7 @@ class GeoCalls extends React.Component {
   updateSeries = async () => {
     let geoLocs = [];
     let calls = await this.api.query("EXEC uspCalls_IP");
-    calls = calls.slice(0, 20);
+    calls = calls.slice(0, 50);
     for (let i in calls){
         const geo = await this.geoIP(calls[i].IP);
         if (geo) {

@@ -18,8 +18,8 @@ class Usage extends React.Component {
                 <UserReg />
                 <Calls />
                 <AppCalls />
-                {/* <WordCloud /> */}
-                {/* <GeoCalls /> */}
+                <WordCloud />
+                <GeoCalls />
 
             </div>
         );

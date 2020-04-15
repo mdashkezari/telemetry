@@ -27,7 +27,7 @@ class GeoCalls extends React.Component {
 
   geoIP = async (ip) => {
       try {
-        const res = await fetch('http://ip-api.com/json/'+ip);
+        const res = await fetch('https://pro.ip-api.com/json/'+ip+'?key=0KRh6ltErC9hP4Z');
         const geo = await res.json();
         return geo
       } catch(err) {
@@ -40,7 +40,7 @@ class GeoCalls extends React.Component {
   updateSeries = async () => {
     let geoLocs = [];
     let calls = await this.api.query("EXEC uspCalls_IP");
-    calls = calls.slice(0, 40);
+    calls = calls.slice(0, 100);
     for (let i in calls){
         const geo = await this.geoIP(calls[i].IP);
         if (geo) {

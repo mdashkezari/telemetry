@@ -10,19 +10,18 @@ import UtilUsage from './components/util-usage/util_usage'
 
 
 
-
 class App extends React.Component {
   render() {
     return (
       <div className="App">
-          <BrowserRouter>
-            <Switch>
-              <Route path='/' exact component={LandingPage} />
-              <Route path='/utils' exact component={Home} />
-              <Route path='/utils/db' exact component={UtilDB} />
-              <Route path='/utils/api' exact component={UtilAPI} />
-              <Route path='/utils/usage' exact component={UtilUsage} />
-            </Switch>  
+        <BrowserRouter>
+          <Switch>
+            <Route path='/' exact component={LandingPage} />
+            <Route path='/utils' exact component={Home} />
+            <Route path='/utils/db' exact component={UtilDB} />
+            <Route path='/utils/api' exact component={UtilAPI} />
+            <Route path='/utils/usage' exact component={UtilUsage} />
+          </Switch>  
         </BrowserRouter>
       </div>
     );

@@ -52,6 +52,7 @@ const dataSource = {
 };
 
 class RatingMeter extends React.Component {
+
   render() {
     return (
       <ReactFusioncharts
@@ -59,7 +60,43 @@ class RatingMeter extends React.Component {
         width="700"
         height="400"
         dataFormat="JSON"
-        dataSource={dataSource}
+        dataSource={{
+          chart: {
+            caption: this.props.title,
+            lowerlimit: "0",
+            upperlimit: "100",
+            showvalue: "1",
+            numbersuffix: "%",
+            theme: "fusion",
+            showtooltip: "0"
+          },
+          colorrange: {
+            color: [
+              {
+                minvalue: "0",
+                maxvalue: "50",
+                code: "#62B58F"
+              },
+              {
+                minvalue: "50",
+                maxvalue: "75",
+                code: "#FFC533"
+              },
+              {
+                minvalue: "75",
+                maxvalue: "100",
+                code: "#F2726F"
+              }
+            ]
+          },
+          dials: {
+            dial: [
+              {
+                value: this.props.value
+              }
+            ]
+          }
+        }}
       />
     );
   }

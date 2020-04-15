@@ -25,7 +25,7 @@ class Calls extends React.Component {
             zoomType: 'xy'
           },
           title: {
-            text: 'Number of User Requests (submitted Queries)'
+            text: 'Number of User Requests'
           },
           credits:{
             enabled: false

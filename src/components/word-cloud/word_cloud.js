@@ -5,6 +5,8 @@ import worldcloud from "highcharts/modules/wordcloud";
 import HighchartsReact from "highcharts-react-official";
 import HighchartsExporting from 'highcharts/modules/exporting'
 import HighchartsExportData from 'highcharts/modules/export-data'
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 if (typeof(Highcharts) === 'object') {
     worldcloud(Highcharts);
@@ -78,7 +80,8 @@ class WordCloud extends React.Component{
 
         return(
                 
-            <div style={{ height: 600, width: 800, fontSize: 10 }}>
+            // <div style={{ height: 600, width: 800, fontSize: 10 }}>
+            <div >
                 {this.state ? <HighchartsReact highcharts={Highcharts} options={
 
                                 {
@@ -105,7 +108,7 @@ class WordCloud extends React.Component{
                                     }]
                                 }
 
-                } /> : <h1>Loading Dataset Word Cloud</h1>};
+                } /> : <CircularProgress color="inherit" />};
             </div>
         );
     }

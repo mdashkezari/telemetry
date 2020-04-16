@@ -27,7 +27,9 @@ class WordCloud extends React.Component{
         this.api.query("EXEC uspCalls_Query")
         .then(data => {
             // this.setState( {tables: this.arrayOfObjects( this.wordFreq(this.tableNames(data)))});
-            this.setState({calls: data});
+            this.setState({calls: data,
+                           tableCalls: this.arrayOfObjects(this.wordFreq(this.tableNames(data))).sort((a, b) => (a.weight > b.weight) ? -1 : 1) 
+                            });
         })
     };
 
@@ -79,37 +81,80 @@ class WordCloud extends React.Component{
     render(){
 
         return(
-                
-            // <div style={{ height: 600, width: 800, fontSize: 10 }}>
-            <div >
-                {this.state ? <HighchartsReact highcharts={Highcharts} options={
+            <React.Fragment>  
 
-                                {
-                                    chart:{
-                                        type: 'wordcloud',
-                                        zoomType: 'xy',
-                                        height: 600,
-                                        width: 800
-                                    },
-                                    title:{
-                                        text: 'Queried Datasets'
-                                    },
-                                    credits:{
-                                        enabled: false
-                                    },
-                                    rotation:{
-                                        from: 0,
-                                        orientations: 5,
-                                        to: 90
-                                    },
-                                    series:[{
-                                        name: 'Call Counts',
-                                        data: this.arrayOfObjects(this.wordFreq(this.tableNames(this.state.calls)))
-                                    }]
-                                }
+                    {this.state ?                 
+                    <HighchartsReact highcharts={Highcharts} options={
+                    {                        
+                        chart:{
+                            type: 'column',
+                            zoomType: 'xy'
+                        },
+                        title:{
+                            text: 'Queried Datasets'
+                        },
+                        credits:{
+                            enabled: false
+                        },
+                        tooltip: {
+                            headerFormat: '<span style="font-size: 12px">{point.key}</span><br/>',
+                            pointFormat: '<span style="font-size: 12px">Requests: {point.y}</span><br/>'
+                        },
+                        xAxis: {
+                            categories: this.state.tableCalls.map(table=>table.name),
+                            crosshair: true
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: 'Number of Requests'
+                            }
+                        },
+                        series:[{
+                            name: 'Requests',
+                            data: this.state.tableCalls.map(table=>table.weight)
 
-                } /> : <CircularProgress color="inherit" />};
-            </div>
+                        }]
+                    }
+                    } /> 
+                    : 
+                    <CircularProgress color="inherit" />};
+
+
+                {this.state ? 
+                    <HighchartsReact highcharts={Highcharts} options={
+                    {                        
+                        chart:{
+                            type: 'wordcloud',
+                            zoomType: 'xy'
+                        },
+                        title:{
+                            text: ''
+                        },
+                        credits:{
+                            enabled: false
+                        },
+                        rotation:{
+                            from: 0,
+                            orientations: 5,
+                            to: 90
+                        },
+                        tooltip: {
+                            headerFormat: '<span style="font-size: 12px">{point.key}</span><br/>',
+                            pointFormat: '<span style="font-size: 12px">Requests: {point.weight}</span><br/>'
+                        },
+                        series:[{
+                            name: 'Call Counts',
+                            data: this.state.tableCalls
+                        }]
+                    }
+                    } /> 
+                    : 
+                    <CircularProgress color="inherit" />};
+
+
+            </React.Fragment>  
+
         );
     }
 }

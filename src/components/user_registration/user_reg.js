@@ -45,7 +45,10 @@ class UsersReg extends React.Component {
                 },
                 min: 0
             },
-
+            tooltip: {
+              headerFormat: '<span style="font-size: 12px">{point.key}</span><br/>',
+              pointFormat: '<span style="font-size: 12px">Requests: {point.y}</span><br/>'
+            },
             series: [
               { name: 'Cumulative Users',
                 data: [] }

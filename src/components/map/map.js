@@ -22,7 +22,28 @@ highchartsMap(Highcharts);
 
 class GeoCalls extends React.Component {
   api = new REST();
-  state = {chartOptions: {series: null}}
+  state = {
+    chartOptions: {
+      chart: {
+        map: "custom/world",
+        zoomType: 'xy'
+      },
+      title: {
+        text: " Requests Spatial Distribution<br/>Loading... "
+      },
+      credits: {
+        enabled: false
+      },
+      mapNavigation: {
+        enabled: false
+      },
+      tooltip: {
+        headerFormat: "",
+        pointFormat:"Requests: {point.requests}<br/> Country: {point.country}<br/> Region: {point.regionName}<br/> City: {point.city}<br/> Latitude: {point.lat}<br/> Longitude: {point.lon}"
+      },
+      series: null
+    }
+    }
 
 
   geoIP = async (ip) => {
@@ -50,22 +71,8 @@ class GeoCalls extends React.Component {
 
     this.setState({
         chartOptions: {
-          chart: {
-            map: "custom/world",
-            zoomType: 'xy'
-          },
           title: {
             text: " Requests Spatial Distribution "
-          },
-          credits: {
-            enabled: false
-          },
-          mapNavigation: {
-            enabled: false
-          },
-          tooltip: {
-            headerFormat: "",
-            pointFormat:"Requests: {point.requests}<br/> Country: {point.country}<br/> Region: {point.regionName}<br/> City: {point.city}<br/> Latitude: {point.lat}<br/> Longitude: {point.lon}"
           },
           series: [
                   {

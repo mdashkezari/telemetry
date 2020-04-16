@@ -30,6 +30,8 @@ const styles = theme => ({
     paper: {
       padding: theme.spacing(2),
       marginTop: theme.spacing(4),
+      marginLeft: theme.spacing(2),
+      marginRight: theme.spacing(2),
       textAlign: 'center',
       color: theme.palette.text.secondary,
     },

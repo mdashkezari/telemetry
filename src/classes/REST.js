@@ -71,7 +71,7 @@ class REST {
         // 
         // queryStatement: string : SQL statement
 
-        const uri = this.uri('/api/data/query?', {query: queryStatement})
+        const uri = this.uri('/api/data/query?', {query: queryStatement, servername: 'rainier'})
         return this.atomic_request(uri);
     }
 
@@ -91,7 +91,7 @@ class REST {
         // depth2: float : end depth.
 
         let queryStatement = "EXEC "+spName+" '"+table+"', '"+variable+"', '"+dt1+"', '"+dt2+"', "+lat1+", "+lat2+", "+lon1+", "+lon2+", "+depth1+", "+depth2;
-        const uri = this.uri('/api/data/query?', {query: queryStatement})
+        const uri = this.uri('/api/data/query?', {query: queryStatement, servername: 'rainier'})
         return this.atomic_request(uri);
 
     }

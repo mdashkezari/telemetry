@@ -24,17 +24,12 @@ class WordCloud extends React.Component{
 
 
     onFetchData = ()=>{
-        this.api.query(`
-                        select Table_Name [name], count(Table_Name) [weight] from tblAPI_Query q 
-                        --join tblApi_Calls c on c.id=q.call_id
-                        --where c.user_id not in (1,2,3,4,5,6,7,10)                         
-                        group by Table_Name order by [weight] desc
-                        `)
+        this.api.query("EXEC uspCalls_Query")
         .then(data => {
-            this.setState({data: data
-                                 .map(d=>({name: d.name.trim(), weight: parseInt(d.weight)}))
-                                 .filter(d=>(d.name.length>0)) 
-                           });
+            // this.setState( {tables: this.arrayOfObjects( this.wordFreq(this.tableNames(data)))});
+            this.setState({calls: data,
+                           tableCalls: this.arrayOfObjects(this.wordFreq(this.tableNames(data))).sort((a, b) => (a.weight > b.weight) ? -1 : 1) 
+                            });
         })
     };
 
@@ -43,6 +38,45 @@ class WordCloud extends React.Component{
         this.onFetchData();
     }
 
+
+    wordFreq(string) {
+        return string.toLowerCase().replace(/[.]/g, '')
+          .split(/\s/)
+          .reduce((map, word) =>
+            Object.assign(map, {
+              [word]: (map[word])
+                ? map[word] + 1
+                : 1,
+            }),
+            {}
+          );
+      };
+
+    arrayOfObjects(obj){
+        let arr = [];
+        for (let [key, value] of Object.entries(obj)) {
+            // if (String(key).length > 0) {arr.push({text: `${key}`, value: value})}
+            if (String(key).length > 0) {arr.push({name: `${key}`, weight: value})}
+        }      
+        return arr;
+      }
+    
+
+    extractTableName = (str) => {
+        let splitter = ' ';
+        if (str[0]==="{") {splitter = '"'}
+        let tbl = str.split(splitter).filter(s => s.toLowerCase().includes('tbl'))[0];
+        if (tbl.split("'").length>2) {tbl = tbl.split("'")[1]} 
+        if (tbl.split('"').length>2) {tbl = tbl.split('"')[1]}  
+        tbl = tbl.replace('[','');
+        tbl = tbl.replace(']','');
+        return tbl.slice(3);
+    }
+    
+    
+    tableNames = (calls) => {
+        return calls.map(call=>(this.extractTableName(call.Query))).join(' ');
+    }  
 
 
 
@@ -69,7 +103,7 @@ class WordCloud extends React.Component{
                             pointFormat: '<span style="font-size: 12px">Requests: {point.y}</span><br/>'
                         },
                         xAxis: {
-                            categories: this.state.data.map(table=>table.name),
+                            categories: this.state.tableCalls.map(table=>table.name),
                             crosshair: true
                         },
                         yAxis: {
@@ -80,7 +114,7 @@ class WordCloud extends React.Component{
                         },
                         series:[{
                             name: 'Requests',
-                            data: this.state.data.map(table=>table.weight)
+                            data: this.state.tableCalls.map(table=>table.weight)
 
                         }]
                     }
@@ -113,7 +147,7 @@ class WordCloud extends React.Component{
                         },
                         series:[{
                             name: 'Call Counts',
-                            data: this.state.data
+                            data: this.state.tableCalls
                         }]
                     }
                     } /> 

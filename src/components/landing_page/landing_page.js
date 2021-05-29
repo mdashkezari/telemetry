@@ -15,7 +15,7 @@ class LandingPage extends React.Component {
                 <div className='heading-box'>
                     <h1 >
                         <span className='heading-main'>CMAP Telemetry</span>
-                        <span className='heading-sub'>Track and Monitor Simons CMAP Stack</span>
+                        <span className='heading-sub'>Track and Monitor Simons CMAP Stack.</span>
                     </h1>
                     
                     <Link to='/utils' className='landing-btn'>Learn More</Link>                    

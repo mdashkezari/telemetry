@@ -46,57 +46,27 @@ class GeoCalls extends React.Component {
     }
 
 
+  geoIP = async (ip) => {
+      try {
+        const res = await fetch('https://pro.ip-api.com/json/'+ip+'?key=0KRh6ltErC9hP4Z');
+        const geo = await res.json();
+        return geo
+      } catch(err) {
+          console.log(err);
+          return null
+      }
+  };
 
-/*
-
-with callers as (
-select ip_address, lat, lon, country, city, region, regionName,
-count(c.Ip_Address) over(partition by c.Ip_Address) as calls,
-rank() over(partition by ip_address order by call_id desc) as [rank]
-from tblAPI_Spatial s
-join tblApi_Calls c on c.id=s.call_id
-where c.Query IS NOT NULL
---and c.User_ID NOT IN (1, 2, 4, 5, 6, 7, 10)
-)
-select * from callers where [rank]=1
-order by calls desc
-
-
-
-
-
-with callers as (
-select lat, lon, country, city, region, regionName, 
-count(call_id) over(partition by lat, lon) as calls,
-rank() over(partition by lat, lon order by call_id) as [rank]
-from tblAPI_Spatial
-)
-select calls, lat, lon, country, city, region, regionName from callers where [rank]=1
-order by calls desc
-
-
-
-*/
 
   updateSeries = async () => {
     let geoLocs = [];
-    let calls = await this.api.query(`
-    with callers as (
-      select ip_address, lat, lon, country, city, region, regionName,
-      count(c.Ip_Address) over(partition by c.Ip_Address) as calls,
-      rank() over(partition by ip_address order by call_id desc) as [rank]
-      from tblAPI_Spatial s
-      join tblApi_Calls c on c.id=s.call_id
-      where c.Query IS NOT NULL
-      and c.User_ID NOT IN (1, 2, 4, 5, 6, 7, 10)
-      )
-      select * from callers where [rank]=1
-      order by calls desc             
-    `);
-
-
+    let calls = await this.api.query("EXEC uspCalls_IP");
+    calls = calls.slice(0, 100);
     for (let i in calls){
-            geoLocs.push({z: parseInt(calls[i].calls), requests: calls[i].calls, country: calls[i].country, regionName: calls[i].regionName, city: calls[i].city, lat: parseFloat(calls[i].lat), lon: parseFloat(calls[i].lon) })            
+        const geo = await this.geoIP(calls[i].IP);
+        if (geo) {
+            geoLocs.push({z: parseInt(calls[i].Calls), requests: calls[i].Calls, country: geo.country, regionName: geo.regionName, city: geo.city, lat: geo.lat, lon: geo.lon })
+        }    
     }
 
     this.setState({

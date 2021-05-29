@@ -15,7 +15,7 @@
     "apexcharts": "^3.17.1",
     "csv-parse": "^4.8.8",
     "fusioncharts": "^3.15.1-sr.1",
-    "highcharts": "^8.0.4",
+    "highcharts": "^9.0.0",
     "highcharts-react-official": "^3.0.0",
     "proj4": "^2.6.1",
     "react": "^16.13.1",
